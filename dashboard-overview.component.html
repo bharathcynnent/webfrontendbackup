@@ -1,0 +1,148 @@
+<div>
+  <p-dropdown
+    class="dashboard-dropdown"
+    [options]="clientNames"
+    [(ngModel)]="defaultSelectedClient"
+    (onChange)="onDashboardChange(defaultSelectedClient)"
+  >
+  </p-dropdown>
+</div>
+
+<div class="cards-grid grid m-0">
+  <div class="col-12 lg:col-6">
+    <div class="card-widget">
+      <p-card-header>
+        <div class="card-header">
+          <div class="header">
+            <img src="./../../../../../assets/img/eye-icon.svg" />
+          </div>
+
+          <span class="icon-header">Most Viewed Pages</span>
+        </div>
+        <span class="menu-icon"
+          ><a routerLink="/mostViewedPages" (click)="onMostViewedPagesClick()"
+            ><img src="./../../../../assets/img/menu.svg" /></a
+        ></span>
+      </p-card-header>
+      <div id="pie-chart-container"></div>
+    </div>
+  </div>
+
+  <div class="col-12 lg:col-6">
+    <div class="clicked-actions card-widget">
+      <p-card-header>
+        <div class="card-header">
+          <div class="header">
+            <img src="./../../../../../assets/img/cursor-finger.svg" />
+          </div>
+
+          <span class="icon-header">Most Clicked Actions </span>
+        </div>
+        <span class="menu-icon"
+          ><a
+            routerLink="/mostClickedActions"
+            (click)="onMostClickedActionsClick()"
+            ><img src="./../../../../assets/img/menu.svg" /></a
+        ></span>
+      </p-card-header>
+      <div id="bar-chart-container"></div>
+    </div>
+  </div>
+
+  <div class="col-12 lg:col-6">
+    <div class="active-user-by-device card-widget">
+      <p-card-header>
+        <div class="card-header">
+          <div class="header">
+            <img src="./../../../../../assets/img/User.svg" />
+          </div>
+          <span class="icon-header">Active User by Device</span>
+        </div>
+        <span class="menu-icon"
+          ><a routerLink="/mostActiveUser" (click)="onActiveUserByDeviceClick()"
+            ><img src="./../../../../assets/img/menu.svg" /></a
+        ></span>
+      </p-card-header>
+      <div id="pieChartContainer"></div>
+      <div id="total-count" class="center-label"></div>
+    </div>
+  </div>
+
+  <div class="col-12 lg:col-6">
+    <div class="card-widget">
+      <p-card-header>
+        <div class="card-header">
+          <div class="header">
+            <img src="./../../../../../assets/img/globe.svg" />
+          </div>
+          <span class="icon-header">Most Used Browsers</span>
+        </div>
+        <span class="menu-icon"
+          ><a routerLink="/mostUsedBrowsers" (click)="onMostUsedBrowserClick()"
+            ><img src="./../../../../assets/img/menu.svg" /></a
+        ></span>
+      </p-card-header>
+      <div id="most-used-browsers-chart-container" class="browser-view"></div>
+    </div>
+  </div>
+
+  <div
+    class="col-12 lg:col-6"
+    style="width: 100%"
+    *ngIf="chartOptions !== null"
+    [ngClass]="{ 'disable-class': ismapDisable === true }"
+  >
+    <div class="card-widget" size="large">
+      <p-card-header>
+        <div class="card-header">
+          <div class="header">
+            <img src="./../../../../../assets/img/maplandmark.svg" />
+          </div>
+          <span class="icon-header">Most Used Countries</span>
+        </div>
+        <span class="menu-icon"
+          ><a
+            routerLink="/mostUsedCountries"
+            (click)="onMostUsedCountriesClick()"
+            ><img src="./../../../../assets/img/menu.svg" /></a
+        ></span>
+      </p-card-header>
+      <div class="grid">
+        <div class="md:col-7 sm:col-12">
+          <highcharts-chart
+            id="map-chart-container"
+            [Highcharts]="Highcharts"
+            [constructorType]="chartConstructor"
+            [options]="chartOptions"
+          >
+          </highcharts-chart>
+        </div>
+
+        <div class="md:col-5 sm:col-12">
+          <div class="flex align-items-center h-full">
+            <div class="chart-progress-bars">
+              <div class="progress-container">
+                <label>Countries</label>
+                <progress [max]="maxValue" value="0"></progress>
+                <span class="progress-value">Users</span>
+              </div>
+              <!-- Rest of the Progress Bars -->
+              <div
+                *ngFor="let progressBar of progressBars"
+                class="progress-container"
+              >
+                <label>{{ progressBar.label }}</label>
+                <progress
+                  [id]="progressBar.id"
+                  [max]="maxValue"
+                  [value]="progressBar.value"
+                ></progress>
+                <span class="progress-value">{{ progressBar.value }}</span>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
